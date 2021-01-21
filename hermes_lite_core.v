@@ -721,6 +721,17 @@ receiver #(.CICRATE(CICRATE)) receiver_inst (	// This first receiver is used for
 //cdc_mcp #(48)           // Transfer the receiver data and strobe from AD9866clkX1 to CLK_122
 //        IQ_sync (.a_data ({rx_I[1], rx_Q[1]}), .a_clk(CLK_122),.b_clk(CLK_122), .a_data_rdy(strobe[1]),
 //                .a_rst(C122_rst), .b_rst(IF_rst), .b_data(IF_M_IQ_Data[1]), .b_data_ack(IF_M_IQ_Data_rdy[1]));
+assign IF_M_IQ_Data[2] = IF_M_IQ_Data[0];
+assign IF_M_IQ_Data_rdy[2] = IF_M_IQ_Data_rdy[0];
+assign IF_M_IQ_Data[3] = IF_M_IQ_Data[0];
+assign IF_M_IQ_Data_rdy[3] = IF_M_IQ_Data_rdy[0];
+assign IF_M_IQ_Data[4] = IF_M_IQ_Data[1];
+assign IF_M_IQ_Data_rdy[4] = IF_M_IQ_Data_rdy[1];
+assign IF_M_IQ_Data[5] = IF_M_IQ_Data[0];
+assign IF_M_IQ_Data_rdy[5] = IF_M_IQ_Data_rdy[0];
+assign IF_M_IQ_Data[6] = IF_M_IQ_Data[0];
+assign IF_M_IQ_Data_rdy[6] = IF_M_IQ_Data_rdy[0];
+
 
 //assign phase word for Rx2 depending upon whether common_Merc_freq is asserted
 assign Rx2_phase_word = common_Merc_freq ? C122_sync_phase_word[0] : C122_sync_phase_word[1];					 
@@ -1017,8 +1028,8 @@ end
 
 wire   [15:0] IF_P_mic_Data;
 wire          IF_P_mic_Data_rdy;
-wire   [47:0] IF_M_IQ_Data [0:NR-1];
-wire [NR-1:0] IF_M_IQ_Data_rdy;
+wire   [47:0] IF_M_IQ_Data [0:6];
+wire [6:0] IF_M_IQ_Data_rdy;
 wire   [63:0] IF_tx_IQ_mic_data;
 reg           IF_tx_IQ_mic_rdy;
 wire   [15:0] IF_mic_Data;
