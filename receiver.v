@@ -51,6 +51,22 @@ assign out_data_I = (out_data_I2 >>> 1);
 assign out_data_Q = (out_data_Q2 >>> 1);
 
 
+//Nyquist odd/even zone I/Q commutator
+/*
+always @ (posedge clock)
+if ((frequency / 32'd30720000) % 2) begin
+
+out_data_I <= (out_data_I2 >>> 1);
+out_data_Q <= (out_data_Q2 >>> 1);
+
+end else begin
+
+out_data_I <= (out_data_Q2 >>> 1);
+out_data_Q <= (out_data_I2 >>> 1);
+
+end
+*/
+
 
 //------------------------------------------------------------------------------
 //                               cordic
@@ -71,6 +87,7 @@ cordic cordic_inst(
 //                     register-based CIC decimator
 //------------------------------------------------------------------------------
 //I channel
+/*
 cic #(.STAGES(3), .DECIMATION(8), .IN_WIDTH(22), .ACC_WIDTH(31), .OUT_WIDTH(18))
   cic_inst_I1(
     .clock(clock),
@@ -89,6 +106,30 @@ cic #(.STAGES(3), .DECIMATION(8), .IN_WIDTH(22), .ACC_WIDTH(31), .OUT_WIDTH(18))
     .in_data(cordic_outdata_Q),
     .out_data(cic_outdata_Q1)
     );
+*/	 
+//------------------------------------------------------------------------------
+//                     register-based CIC decimator
+//------------------------------------------------------------------------------
+//I channel
+cic #(.STAGES(5), .DECIMATION(4), .IN_WIDTH(22), .ACC_WIDTH(32), .OUT_WIDTH(18))
+  cic_inst_I1(
+    .clock(clock),
+    .in_strobe(1'b1),
+    .out_strobe(cic_outstrobe_1),
+    .in_data(cordic_outdata_I),
+    .out_data(cic_outdata_I1)
+    );
+
+//Q channel
+cic #(.STAGES(5), .DECIMATION(4), .IN_WIDTH(22), .ACC_WIDTH(32), .OUT_WIDTH(18))
+  cic_inst_Q1(
+    .clock(clock),
+    .in_strobe(1'b1),
+    .out_strobe(),
+    .in_data(cordic_outdata_Q),
+    .out_data(cic_outdata_Q1)
+    );	 
+	 
 
 wire cic_outstrobe_1;
 wire signed [17:0] cic_outdata_I1;

@@ -643,9 +643,11 @@ cdc_sync #(32)
 //
 receiver #(.CICRATE(CICRATE)) receiver_inst0 (	// This first receiver is used for transceiver and VNA_SCAN_PC.
     //control
-    .clock(CLK_122),
+    //.clock(CLK_122),
+	 .clock(CLK_61),
     .rate(rate),
-    .frequency(rx0_frequency),
+    //.frequency(rx0_frequency),
+	 .frequency(rx0_frequency*2),
     .out_strobe(strobe[0]),
     //input
     .in_data(select_input_RX[0]),
@@ -658,9 +660,11 @@ receiver #(.CICRATE(CICRATE)) receiver_inst0 (	// This first receiver is used fo
 	 
 receiver #(.CICRATE(CICRATE)) receiver_inst (	// This first receiver is used for transceiver and VNA_SCAN_PC.
     //control
-    .clock(CLK_122),
+    //.clock(CLK_122),
+	 .clock(CLK_61),
     .rate(rate),
-    .frequency((FPGA_PTT ? C122_sync_phase_word[0] : Rx2_phase_word)),
+    //.frequency((FPGA_PTT ? C122_sync_phase_word[0] : Rx2_phase_word)),
+	 .frequency((FPGA_PTT ? C122_sync_phase_word[0] : Rx2_phase_word)*2),
     .out_strobe(strobe[1]),
     //input
     .in_data(select_input_special),
