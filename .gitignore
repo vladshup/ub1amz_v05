@@ -46,7 +46,7 @@
 *.qws
 *.rpt
 *.smsg
-*.sof
+#*.sof
 *.sopc_builder
 *.summary
 *.tcl
